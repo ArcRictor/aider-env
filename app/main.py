@@ -59,12 +59,10 @@ async def login(request: Request):
     state_tokens[state] = True
     
     # Create OAuth flow
-    # Ensure redirect URI matches exactly what's configured in Google Cloud Console
-    redirect_uri = f"http://localhost:8000/oauth2_callback"
     flow = GmailService.create_flow(
         settings.GMAIL_CLIENT_ID,
         settings.GMAIL_CLIENT_SECRET,
-        redirect_uri
+        settings.OAUTH_REDIRECT_URI
     )
     
     authorization_url, state = flow.authorization_url(
@@ -84,11 +82,10 @@ async def oauth2_callback(request: Request, db: Session = Depends(get_db)):
     if state not in state_tokens:
         raise HTTPException(status_code=400, detail="Invalid state token")
     
-    redirect_uri = f"http://localhost:8000/oauth2_callback"
     flow = GmailService.create_flow(
         settings.GMAIL_CLIENT_ID,
         settings.GMAIL_CLIENT_SECRET,
-        redirect_uri
+        settings.OAUTH_REDIRECT_URI
     )
     
     # Get credentials
