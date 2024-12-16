@@ -28,16 +28,18 @@ class AIService:
             if not settings.OPENROUTER_API_KEY.startswith("sk-or-v1-"):
                 return "Error: Invalid OpenRouter API key format. Key should start with 'sk-or-v1-'"
 
+            # Set default headers for all requests
+            self.client.default_headers = {
+                "HTTP-Referer": "http://localhost:8000",  # OpenRouter requires this
+                "X-Title": "Smart Email Manager"  # Optional but recommended
+            }
+            
             response = self.client.chat.completions.create(
                 model="openai/gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional email analyst. Provide clear, concise analysis of emails."},
                     {"role": "user", "content": prompt}
-                ],
-                headers={
-                    "HTTP-Referer": "http://localhost:8000",  # OpenRouter requires this
-                    "X-Title": "Smart Email Manager"  # Optional but recommended
-                }
+                ]
             )
             return response.choices[0].message.content
         except Exception as e:
