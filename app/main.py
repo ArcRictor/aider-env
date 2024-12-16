@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.sessions import SessionMiddleware
 from sqlalchemy.orm import Session
 import secrets
 
@@ -14,6 +15,12 @@ from .services.gmail import GmailService
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Smart Email Manager")
+# Add session middleware
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=secrets.token_urlsafe(32),  # Generate a random secret key
+    session_cookie="session"
+)
 
 # Mount static files and templates
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
