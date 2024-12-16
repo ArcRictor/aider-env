@@ -10,6 +10,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     is_active = Column(Boolean, default=True)
+    gmail_credentials = Column(String, nullable=True)  # Store credentials as encrypted JSON string
 
 class Email(Base):
     __tablename__ = "emails"
