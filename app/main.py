@@ -136,6 +136,14 @@ async def logout(request: Request):
     request.session.clear()
     return RedirectResponse(url="/")
 
+@app.get("/refresh")
+async def refresh(request: Request, db: Session = Depends(get_db)):
+    if "user_id" not in request.session:
+        return RedirectResponse(url="/login", status_code=303)
+    
+    # Redirect back to home page which will load fresh emails
+    return RedirectResponse(url="/", status_code=303)
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
