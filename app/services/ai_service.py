@@ -5,7 +5,11 @@ class AIService:
     def __init__(self):
         self.client = OpenAI(
             api_key=settings.OPENROUTER_API_KEY,
-            base_url="https://openrouter.ai/api/v1"
+            base_url="https://openrouter.ai/api/v1",
+            default_headers={
+                "HTTP-Referer": "http://localhost:8000",  # OpenRouter requires this
+                "X-Title": "Smart Email Manager"  # Optional but recommended
+            }
         )
 
     def analyze_email(self, email_content, subject):
@@ -28,12 +32,6 @@ class AIService:
             if not settings.OPENROUTER_API_KEY.startswith("sk-or-v1-"):
                 return "Error: Invalid OpenRouter API key format. Key should start with 'sk-or-v1-'"
 
-            # Set default headers for all requests
-            self.client.default_headers = {
-                "HTTP-Referer": "http://localhost:8000",  # OpenRouter requires this
-                "X-Title": "Smart Email Manager"  # Optional but recommended
-            }
-            
             response = self.client.chat.completions.create(
                 model="openai/gpt-3.5-turbo",
                 messages=[
