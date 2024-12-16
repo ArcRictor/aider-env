@@ -62,7 +62,7 @@
                                         
                                         <div class="alert alert-secondary mb-0">
                                             <strong>Final Assessment:</strong><br>
-                                            {{ analysis[3] | replace('Final Assessment:', '') | trim | safe }}
+                                            {{ analysis[3] | replace('Final Assessment:', '') | trim | safe | replace('\n', '<br>') }}
                                         </div>
                                     {% endif %}
                                 </div>

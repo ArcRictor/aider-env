@@ -31,7 +31,7 @@ class AIService:
 
         Final Assessment:
         Priority: [High/Medium/Low]
-        Recommendation: [Respond/Delete] - [Brief justification]
+        Recommendation: [Keep/Archive/Delete] - [Brief justification]
 
         Keep each section concise and actionable.
         """
