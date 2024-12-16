@@ -22,18 +22,20 @@ class AIService:
         
         Provide a structured analysis in the following format:
 
-        Main Purpose:
-        [One clear sentence describing the primary intent of the email]
-
         Action Items:
-        - [List each action item on a new line]
-        - [If no action items, state "No action items required"]
+        [List specific actions needed in response to this email]
+        [If no actions needed, state "No action required"]
 
-        Final Assessment:
+        Analysis:
         Priority: [High/Medium/Low]
-        Recommendation: [Keep/Archive/Delete] - [Brief justification]
+        Key Points:
+        - [List main points and implications]
+        - [Include relevant details and context]
 
-        Keep each section concise and actionable.
+        Final Action:
+        [Single word: Respond/Archive/Delete]
+
+        Keep the analysis concise and actionable.
         """
         
         try:

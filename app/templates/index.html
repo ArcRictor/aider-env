@@ -60,18 +60,21 @@
                                     {% if email.ai_analysis %}
                                         {% set analysis = email.ai_analysis.split('\n\n') %}
                                         <div class="mb-3">
-                                            <h6 class="text-primary">Main Purpose:</h6>
-                                            <p>{{ analysis[1] | replace('Main Purpose:', '') | trim }}</p>
+                                            <h5 class="text-primary border-bottom pb-2">Action Items</h5>
+                                            <p class="mb-3">{{ analysis[1] | replace('Action Items:', '') | trim }}</p>
                                         </div>
                                         
                                         <div class="mb-3">
-                                            <h6 class="text-primary">Action Items:</h6>
-                                            {{ analysis[2] | replace('Action Items:', '') | trim | safe }}
+                                            <h5 class="text-primary border-bottom pb-2">Analysis</h5>
+                                            <div class="mb-3">
+                                                {{ analysis[2] | replace('Analysis:', '') | trim | safe }}
+                                            </div>
                                         </div>
                                         
-                                        <div class="alert alert-secondary mb-0">
-                                            <strong>Final Assessment:</strong><br>
-                                            {{ analysis[3] | replace('Final Assessment:', '') | trim | safe | replace('\n', '<br>') }}
+                                        <div class="text-end">
+                                            <span class="badge bg-secondary">
+                                                {{ analysis[3] | replace('Final Action:', '') | trim }}
+                                            </span>
                                         </div>
                                     {% endif %}
                                 </div>
