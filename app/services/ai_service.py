@@ -20,23 +20,10 @@ class AIService:
         Content:
         {email_content}
         
-        Provide a structured analysis in the following format:
+        Provide only the following two pieces of information:
 
-        Primary Information:
-        - Main Message: [One clear sentence describing the core message]
-        - Required Response: [What needs to be done, if anything]
-        - Deadline: [Any time-sensitive information, or "None"]
-
-        Additional Information:
-        - [List key supporting details]
-        - [List relevant policies or requirements]
-        - [List any offers or opportunities]
-
-        Assessment:
-        Priority: [High/Medium/Low]
+        Priority: [Single word: High/Medium/Low]
         Action: [Single word: Respond/Archive/Delete]
-
-        Keep each section clear and concise.
         """
         
         try:
