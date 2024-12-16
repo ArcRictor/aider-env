@@ -78,6 +78,14 @@ async def login(request: Request):
 
 @app.get("/oauth2_callback")
 async def oauth2_callback(request: Request, db: Session = Depends(get_db)):
+    # Check for error parameter which Google returns when authentication fails
+    error = request.query_params.get("error")
+    if error:
+        error_msg = "Authentication failed. "
+        if error == "access_denied":
+            error_msg += "Please make sure your Google account is added as a test user in the OAuth consent screen."
+        raise HTTPException(status_code=400, detail=error_msg)
+
     state = request.query_params.get("state")
     if state not in state_tokens:
         raise HTTPException(status_code=400, detail="Invalid state token")
@@ -88,10 +96,11 @@ async def oauth2_callback(request: Request, db: Session = Depends(get_db)):
         settings.OAUTH_REDIRECT_URI
     )
     
-    # Get credentials
-    flow.fetch_token(
-        authorization_response=str(request.url)
-    )
+    try:
+        # Get credentials
+        flow.fetch_token(
+            authorization_response=str(request.url)
+        )
     credentials = flow.credentials
     
     # Get user email

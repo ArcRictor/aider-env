@@ -22,6 +22,14 @@
     </nav>
 
     <div class="container mt-4">
+        {% if request.query_params.get('error') %}
+            <div class="alert alert-danger">
+                <h4 class="alert-heading">Authentication Error</h4>
+                <p>Unable to authenticate with Google. This application is in testing mode.</p>
+                <hr>
+                <p class="mb-0">Please contact the administrator to add your Google account ({{ request.query_params.get('email', '') }}) as a test user.</p>
+            </div>
+        {% endif %}
         {% if user %}
             <div class="row">
                 <div class="col-12">
