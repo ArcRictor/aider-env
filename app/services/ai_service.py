@@ -3,7 +3,10 @@ from ..config import settings
 
 class AIService:
     def __init__(self):
-        self.client = OpenAI(api_key=settings.OPENROUTER_API_KEY)
+        self.client = OpenAI(
+            api_key=settings.OPENROUTER_API_KEY,
+            base_url="https://openrouter.ai/api/v1"
+        )
 
     def analyze_email(self, email_content, subject):
         """Analyze email content and provide insights"""
