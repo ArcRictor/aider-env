@@ -4,6 +4,7 @@ from googleapiclient.discovery import build
 from datetime import datetime
 import base64
 import email
+from email.utils import parsedate_to_datetime
 import json
 
 class GmailService:
@@ -104,7 +105,7 @@ class GmailService:
                     'message_id': message['id'],
                     'subject': subject,
                     'sender': sender,
-                    'received_at': datetime.strptime(date, '%a, %d %b %Y %H:%M:%S %z'),
+                    'received_at': parsedate_to_datetime(date),
                     'content': body
                 })
 
