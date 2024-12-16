@@ -101,7 +101,9 @@ async def oauth2_callback(request: Request, db: Session = Depends(get_db)):
         flow.fetch_token(
             authorization_response=str(request.url)
         )
-    credentials = flow.credentials
+        credentials = flow.credentials
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to fetch token: {str(e)}")
     
     # Get user email
     gmail_service = GmailService(credentials=credentials)
