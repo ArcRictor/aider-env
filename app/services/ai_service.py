@@ -41,7 +41,7 @@ class AIService:
                 return "Error: Invalid OpenRouter API key format. Key should start with 'sk-or-v1-'"
 
             response = self.client.chat.completions.create(
-                model="openai/gpt-4-1106-preview",
+                model="openai/o1-mini-2024-09-12",
                 messages=[
                     {"role": "system", "content": "You are a professional email analyst. Provide clear, concise analysis of emails."},
                     {"role": "user", "content": prompt}
