@@ -3,7 +3,7 @@ from functools import lru_cache
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Smart Email Manager"
-    OPENROUTER_API_KEY: str = ""
+    OPENROUTER_API_KEY: str
     GMAIL_CLIENT_ID: str = ""
     GMAIL_CLIENT_SECRET: str = ""
     EMAIL_CHECK_INTERVAL: int = 300  # 5 minutes in seconds

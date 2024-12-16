@@ -6,6 +6,7 @@ import base64
 import email
 from email.utils import parsedate_to_datetime
 import json
+from .ai_service import AIService
 
 class GmailService:
     SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/userinfo.email', 'openid']
@@ -13,6 +14,7 @@ class GmailService:
     def __init__(self, credentials=None):
         self.credentials = self._parse_credentials(credentials)
         self.service = None if self.credentials is None else self._build_service()
+        self.ai_service = AIService()
 
     def _parse_credentials(self, credentials):
         if credentials is None:
@@ -101,12 +103,16 @@ class GmailService:
 
                 body = base64.urlsafe_b64decode(data.encode('ASCII')).decode('utf-8')
 
+                # Get AI analysis
+                ai_analysis = self.ai_service.analyze_email(body, subject)
+
                 messages.append({
                     'message_id': message['id'],
                     'subject': subject,
                     'sender': sender,
                     'received_at': parsedate_to_datetime(date),
-                    'content': body
+                    'content': body,
+                    'ai_analysis': ai_analysis
                 })
 
         return messages
