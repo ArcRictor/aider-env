@@ -29,18 +29,23 @@ class GmailService:
             )
         return credentials
 
-    def credentials_to_json(self):
-        """Convert credentials to JSON string for storage"""
+    def credentials_to_dict(self):
+        """Convert credentials to dictionary for storage"""
         if self.credentials:
-            return json.dumps({
+            return {
                 'token': self.credentials.token,
                 'refresh_token': self.credentials.refresh_token,
                 'token_uri': self.credentials.token_uri,
                 'client_id': self.credentials.client_id,
                 'client_secret': self.credentials.client_secret,
                 'scopes': self.credentials.scopes
-            })
+            }
         return None
+
+    def credentials_to_json(self):
+        """Convert credentials to JSON string for storage"""
+        creds_dict = self.credentials_to_dict()
+        return json.dumps(creds_dict) if creds_dict else None
 
     def _build_service(self):
         return build('gmail', 'v1', credentials=self.credentials)
