@@ -22,20 +22,21 @@ class AIService:
         
         Provide a structured analysis in the following format:
 
-        Action Items:
-        [List specific actions needed in response to this email]
-        [If no actions needed, state "No action required"]
+        Primary Information:
+        - Main Message: [One clear sentence describing the core message]
+        - Required Response: [What needs to be done, if anything]
+        - Deadline: [Any time-sensitive information, or "None"]
 
-        Analysis:
+        Additional Information:
+        - [List key supporting details]
+        - [List relevant policies or requirements]
+        - [List any offers or opportunities]
+
+        Assessment:
         Priority: [High/Medium/Low]
-        Key Points:
-        - [List main points and implications]
-        - [Include relevant details and context]
+        Action: [Single word: Respond/Archive/Delete]
 
-        Final Action:
-        [Single word: Respond/Archive/Delete]
-
-        Keep the analysis concise and actionable.
+        Keep each section clear and concise.
         """
         
         try:

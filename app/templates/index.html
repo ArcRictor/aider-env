@@ -59,21 +59,34 @@
                                 <div class="card-body">
                                     {% if email.ai_analysis %}
                                         {% set analysis = email.ai_analysis.split('\n\n') %}
-                                        <div class="mb-3">
-                                            <h5 class="text-primary border-bottom pb-2">Action Items</h5>
-                                            <p class="mb-3">{{ analysis[1] | replace('Action Items:', '') | trim }}</p>
-                                        </div>
+                                        {% set assessment = analysis[3] | replace('Assessment:', '') | trim %}
+                                        {% set priority = assessment.split('\n')[0] | replace('Priority:', '') | trim %}
+                                        {% set action = assessment.split('\n')[1] | replace('Action:', '') | trim %}
                                         
+                                        <div class="d-flex justify-content-end mb-2">
+                                            <span class="badge {% if 'High' in priority %}bg-danger{% elif 'Medium' in priority %}bg-warning{% else %}bg-info{% endif %}">
+                                                Priority: {{ priority }}
+                                            </span>
+                                        </div>
+
                                         <div class="mb-3">
-                                            <h5 class="text-primary border-bottom pb-2">Analysis</h5>
-                                            <div class="mb-3">
-                                                {{ analysis[2] | replace('Analysis:', '') | trim | safe }}
+                                            <h5 class="text-primary border-bottom pb-2">Primary Information</h5>
+                                            <div class="ps-3">
+                                                {{ analysis[1] | replace('Primary Information:', '') | trim | safe }}
                                             </div>
                                         </div>
                                         
-                                        <div class="text-end">
-                                            <span class="badge bg-secondary">
-                                                {{ analysis[3] | replace('Final Action:', '') | trim }}
+                                        <div class="mb-3">
+                                            <h5 class="text-primary border-bottom pb-2">Additional Information</h5>
+                                            <div class="ps-3">
+                                                {{ analysis[2] | replace('Additional Information:', '') | trim | safe }}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                                            <h6 class="mb-0">Recommended Action:</h6>
+                                            <span class="badge {% if 'Respond' in action %}bg-primary{% elif 'Archive' in action %}bg-secondary{% else %}bg-dark{% endif %}">
+                                                {{ action }}
                                             </span>
                                         </div>
                                     {% endif %}
