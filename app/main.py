@@ -1,4 +1,7 @@
+import os
 from fastapi import FastAPI, Depends, HTTPException, Request
+# Allow HTTP for local development
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
