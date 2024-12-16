@@ -25,6 +25,12 @@
         {% if user %}
             <div class="row">
                 <div class="col-12">
+                    <div class="alert alert-info mb-4">
+                        <h4 class="alert-heading">📬 Email Access Information</h4>
+                        <p>This application only has <strong>read-only</strong> access to your Gmail inbox. It cannot modify, delete, or send emails on your behalf.</p>
+                        <hr>
+                        <p class="mb-0">Your emails are displayed below for viewing purposes only.</p>
+                    </div>
                     <h2>Recent Emails</h2>
                     {% if emails %}
                         {% for email in emails %}
