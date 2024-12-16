@@ -6,7 +6,7 @@ import base64
 import email
 
 class GmailService:
-    SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+    SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/userinfo.email']
 
     def __init__(self, credentials=None):
         self.credentials = credentials

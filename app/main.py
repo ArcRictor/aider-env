@@ -73,8 +73,7 @@ async def login(request: Request):
         include_granted_scopes='true',
         prompt='consent',
         state=state,
-        scopes=['https://www.googleapis.com/auth/gmail.readonly', 
-                'https://www.googleapis.com/auth/userinfo.email']
+        scopes=GmailService.SCOPES
     )
     
     return RedirectResponse(authorization_url)
