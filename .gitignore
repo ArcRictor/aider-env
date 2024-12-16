@@ -1,5 +1,7 @@
 .aider*
 .env
+*.db
+smart_email.db
 # Python
 __pycache__/
 *.py[cod]
