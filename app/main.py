@@ -67,7 +67,10 @@ async def login(request: Request):
     authorization_url, state = flow.authorization_url(
         access_type='offline',
         include_granted_scopes='true',
-        state=state
+        prompt='consent',
+        state=state,
+        scopes=['https://www.googleapis.com/auth/gmail.readonly', 
+                'https://www.googleapis.com/auth/userinfo.email']
     )
     
     return RedirectResponse(authorization_url)
