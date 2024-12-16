@@ -17,6 +17,9 @@ class GmailService:
 
     @staticmethod
     def create_flow(client_id, client_secret, redirect_uri):
+        if not client_id or not client_secret:
+            raise ValueError("Missing Gmail OAuth credentials. Check your .env file for GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET")
+        
         flow = Flow.from_client_config(
             {
                 "web": {
@@ -24,6 +27,8 @@ class GmailService:
                     "client_secret": client_secret,
                     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
                     "token_uri": "https://oauth2.googleapis.com/token",
+                    "redirect_uris": [redirect_uri],
+                    "javascript_origins": ["http://localhost:8000"]
                 }
             },
             scopes=GmailService.SCOPES,

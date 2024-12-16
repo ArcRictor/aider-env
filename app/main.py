@@ -81,10 +81,11 @@ async def oauth2_callback(request: Request, db: Session = Depends(get_db)):
     # Check for error parameter which Google returns when authentication fails
     error = request.query_params.get("error")
     if error:
-        error_msg = "Authentication failed. "
-        if error == "access_denied":
-            error_msg += "Please make sure your Google account is added as a test user in the OAuth consent screen."
-        raise HTTPException(status_code=400, detail=error_msg)
+        # Instead of raising an exception, redirect to home with error message
+        return RedirectResponse(
+            url=f"/?error=true&email={request.query_params.get('email', '')}", 
+            status_code=303
+        )
 
     state = request.query_params.get("state")
     if state not in state_tokens:
