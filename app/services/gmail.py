@@ -4,13 +4,43 @@ from googleapiclient.discovery import build
 from datetime import datetime
 import base64
 import email
+import json
 
 class GmailService:
     SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/userinfo.email', 'openid']
 
     def __init__(self, credentials=None):
-        self.credentials = credentials
-        self.service = None if credentials is None else self._build_service()
+        self.credentials = self._parse_credentials(credentials)
+        self.service = None if self.credentials is None else self._build_service()
+
+    def _parse_credentials(self, credentials):
+        if credentials is None:
+            return None
+        if isinstance(credentials, str):
+            # Parse JSON string into dict
+            creds_dict = json.loads(credentials)
+            return Credentials(
+                token=creds_dict['token'],
+                refresh_token=creds_dict['refresh_token'],
+                token_uri=creds_dict['token_uri'],
+                client_id=creds_dict['client_id'],
+                client_secret=creds_dict['client_secret'],
+                scopes=creds_dict['scopes']
+            )
+        return credentials
+
+    def credentials_to_json(self):
+        """Convert credentials to JSON string for storage"""
+        if self.credentials:
+            return json.dumps({
+                'token': self.credentials.token,
+                'refresh_token': self.credentials.refresh_token,
+                'token_uri': self.credentials.token_uri,
+                'client_id': self.credentials.client_id,
+                'client_secret': self.credentials.client_secret,
+                'scopes': self.credentials.scopes
+            })
+        return None
 
     def _build_service(self):
         return build('gmail', 'v1', credentials=self.credentials)

@@ -119,8 +119,9 @@ async def oauth2_callback(request: Request, db: Session = Depends(get_db)):
         user = User(email=email)
         db.add(user)
     
-    # Store credentials (in production, encrypt these)
-    user.gmail_credentials = credentials
+    # Create Gmail service and store serialized credentials
+    gmail_service = GmailService(credentials=credentials)
+    user.gmail_credentials = gmail_service.credentials_to_json()
     db.commit()
     
     # Set session
