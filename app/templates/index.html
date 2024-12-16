@@ -43,13 +43,26 @@
                     {% if emails %}
                         {% for email in emails %}
                             <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5 class="mb-0">{{ email.subject }}</h5>
+                                    <small class="text-muted">From: {{ email.sender }}</small>
+                                </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ email.subject }}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">From: {{ email.sender }}</h6>
-                                    <p class="card-text">{{ email.content[:200] }}...</p>
                                     {% if email.ai_analysis %}
-                                        <div class="alert alert-info">
-                                            <strong>AI Analysis:</strong> {{ email.ai_analysis }}
+                                        {% set analysis = email.ai_analysis.split('\n\n') %}
+                                        <div class="mb-3">
+                                            <h6 class="text-primary">Main Purpose:</h6>
+                                            <p>{{ analysis[1] | replace('Main Purpose:', '') | trim }}</p>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <h6 class="text-primary">Action Items:</h6>
+                                            {{ analysis[2] | replace('Action Items:', '') | trim | safe }}
+                                        </div>
+                                        
+                                        <div class="alert alert-secondary mb-0">
+                                            <strong>Final Assessment:</strong><br>
+                                            {{ analysis[3] | replace('Final Assessment:', '') | trim | safe }}
                                         </div>
                                     {% endif %}
                                 </div>

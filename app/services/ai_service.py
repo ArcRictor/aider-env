@@ -20,12 +20,20 @@ class AIService:
         Content:
         {email_content}
         
-        Provide a brief, professional analysis focusing on:
-        1. The main purpose/intent of the email
-        2. Key points or action items
-        3. Priority level (High/Medium/Low)
-        
-        Keep the analysis concise and actionable.
+        Provide a structured analysis in the following format:
+
+        Main Purpose:
+        [One clear sentence describing the primary intent of the email]
+
+        Action Items:
+        - [List each action item on a new line]
+        - [If no action items, state "No action items required"]
+
+        Final Assessment:
+        Priority: [High/Medium/Low]
+        Recommendation: [Respond/Delete] - [Brief justification]
+
+        Keep each section concise and actionable.
         """
         
         try:
