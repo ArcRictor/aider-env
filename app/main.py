@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-from fastapi.middleware.sessions import SessionMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 from sqlalchemy.orm import Session
 import secrets
 
