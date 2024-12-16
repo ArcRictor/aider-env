@@ -31,15 +31,16 @@ state_tokens = {}
 
 @app.get("/")
 async def root(request: Request, db: Session = Depends(get_db)):
-    user = None
+    # If user is not logged in, redirect to login
+    if "user_id" not in request.session:
+        return RedirectResponse(url="/login", status_code=303)
+    
+    user = db.query(User).filter(User.id == request.session["user_id"]).first()
     emails = []
     
-    # Get user from session if exists
-    if "user_id" in request.session:
-        user = db.query(User).filter(User.id == request.session["user_id"]).first()
-        if user and hasattr(user, 'gmail_credentials'):
-            gmail_service = GmailService(credentials=user.gmail_credentials)
-            emails = gmail_service.get_recent_emails()
+    if user and hasattr(user, 'gmail_credentials'):
+        gmail_service = GmailService(credentials=user.gmail_credentials)
+        emails = gmail_service.get_recent_emails()
     
     return templates.TemplateResponse(
         "index.html",
